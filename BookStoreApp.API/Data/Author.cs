@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreApp.API.Data
 {
-    public partial class Authors
+    public partial class Author
     {
-        public Authors()
+        public Author()
         {
-            Books = new HashSet<Books>();
+            Books = new HashSet<Book>();
         }
 
         [Key]
@@ -25,6 +25,6 @@ namespace BookStoreApp.API.Data
         public string Bio { get; set; }
 
         [InverseProperty("Author")]
-        public virtual ICollection<Books> Books { get; set; }
+        public virtual ICollection<Book> Books { get; set; }
     }
 }

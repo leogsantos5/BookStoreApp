@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BookStoreApp.API.Data
 {
     [Index("ISBN", Name = "UQ__Books__447D36EAF537BD44", IsUnique = true)]
-    public partial class Books
+    public partial class Book
     {
         [Key]
         public int Id { get; set; }

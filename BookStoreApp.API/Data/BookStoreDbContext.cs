@@ -18,8 +18,8 @@ namespace BookStoreApp.API.Data
         {
         }
 
-        public virtual DbSet<Authors> Authors { get; set; }
-        public virtual DbSet<Books> Books { get; set; }
+        public virtual DbSet<Author> Authors { get; set; }
+        public virtual DbSet<Book> Books { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,7 +32,7 @@ namespace BookStoreApp.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Books>(entity =>
+            modelBuilder.Entity<Book>(entity =>
             {
                 entity.HasOne(d => d.Author)
                     .WithMany(p => p.Books)

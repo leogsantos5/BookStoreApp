@@ -13,14 +13,11 @@ namespace BookStoreApp.API.Data
     {
         [Key]
         public int Id { get; set; }
-        [StringLength(50)]
+
         public string Title { get; set; }
         public int? Year { get; set; }
-        [StringLength(50)]
         public string ISBN { get; set; }
-        [StringLength(250)]
         public string Summary { get; set; }
-        [StringLength(50)]
         public string Image { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? Price { get; set; }

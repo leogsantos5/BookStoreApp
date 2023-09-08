@@ -62,7 +62,9 @@ namespace BookStoreApp.API.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(bookDto).State = EntityState.Modified;
+            var book = await _context.Books.FindAsync(id);
+            mapper.Map(bookDto, book);
+            _context.Entry(book).State = EntityState.Modified;
 
             try
             {
@@ -86,16 +88,13 @@ namespace BookStoreApp.API.Controllers
         // POST: api/Books
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Book>> PostBook(Book book)
+        public async Task<ActionResult<Book>> PostBook(BookCreateDTO bookDto)
         {
-          if (_context.Books == null)
-          {
-              return Problem("Entity set 'BookStoreDbContext.Books'  is null.");
-          }
+            var book = mapper.Map<Book>(bookDto);
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBook", new { id = book.Id }, book);
+            return CreatedAtAction(nameof(GetBook), new { id = book.Id }, book);
         }
 
         // DELETE: api/Books/5

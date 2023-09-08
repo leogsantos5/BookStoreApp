@@ -1,0 +1,42 @@
+﻿@page "/users/register"
+
+<h3>Register New Account</h3>
+
+<div class="card-body">
+    <EditForm Model="RegistrationModel" OnValidSubmit="HandleRegistration">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div>
+            <label for="email">Email Address</label>
+            <InputText class="form-control" @bind-Value="RegistrationModel.Email"/>
+            <ValidationMessage For="@(() => RegistrationModel.Email)" />
+        </div>
+        <div>
+            <label for="first name">First Name</label>
+            <InputText class="form-control" @bind-Value="RegistrationModel.FirstName"/>
+            <ValidationMessage For="@(() => RegistrationModel.FirstName)" />
+        </div>
+        <div>
+            <label for="last name">Last Name</label>
+            <InputText class="form-control" @bind-Value="RegistrationModel.LastName" />
+        <ValidationMessage For="@(() => RegistrationModel.LastName)" />
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <InputText class="form-control" @bind-Value="RegistrationModel.Password" />
+            <ValidationMessage For="@(() => RegistrationModel.Password)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block"></button>
+    </EditForm>
+
+</div>
+
+@code {
+    UserDTO RegistrationModel = new UserDTO();
+
+    private async Task HandleRegistration()
+    {
+        RegistrationModel.Role = "User";
+    }
+}

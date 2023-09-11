@@ -8,7 +8,7 @@ namespace BookStoreApp.BlazorServer.Providers
     public class ApiAuthStateProvider : AuthenticationStateProvider
     {
         private readonly ILocalStorageService localStorage;
-        private readonly JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+        private readonly JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler(); // Suspicious... weird...
 
         public ApiAuthStateProvider(ILocalStorageService localStorage)
         {

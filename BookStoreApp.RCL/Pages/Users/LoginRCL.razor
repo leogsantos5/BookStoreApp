@@ -1,0 +1,36 @@
+﻿@using BookStoreApp.Library.Services.Authentication;
+@using BookStoreApp.Library.Services.Base;
+@inject IAuthenticationService authService
+@inject NavigationManager navManager
+
+<LoginRCL LoginModel="LoginModel" HandleLogin="HandleLogin"></LoginRCL>
+
+@code {
+    LoginUserDto LoginModel = new LoginUserDto();
+    string message = string.Empty;
+
+    private async Task HandleLogin()
+    {
+        try
+        {
+            var response = await authService.AuthenticateAsync(LoginModel);
+
+            if (response)
+                navManager.NavigateTo("/");
+            else
+                navManager.NavigateTo("/users/login");
+        }
+        catch (ApiException apiExc)
+        {
+            if (apiExc.StatusCode >= 200 && apiExc.StatusCode < 300)
+                NavigateToLogin();
+
+            message = apiExc.Response;
+        }
+    }
+
+    private void NavigateToLogin()
+    {
+        navManager.NavigateTo("/users/login");
+    }
+}

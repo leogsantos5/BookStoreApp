@@ -20,6 +20,8 @@ namespace BookStoreApp.BlazorServer.Services.Base
                 return new Response<Guid>() { Message = "Validation errors have occured.", ValidationErrors = apiException.Response, Success = false };
             if (apiException.StatusCode == 404)
                 return new Response<Guid>() { Message = "The requested item could not be found.", ValidationErrors = apiException.Response, Success = false };
+            if (apiException.StatusCode >= 200 && apiException.StatusCode <= 299)
+                return new Response<Guid>() { Message = "Operation Reported Success", ValidationErrors = apiException.Response, Success = true };
 
             return new Response<Guid>() { Message = "Something went wrong. Please try again.", ValidationErrors = apiException.Response, Success = false };
         }

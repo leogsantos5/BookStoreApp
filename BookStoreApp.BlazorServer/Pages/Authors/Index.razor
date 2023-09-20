@@ -1,6 +1,7 @@
 ﻿@page "/authors"
 @inject IClient httpClient
 @inject IAuthorService authorService
+@inject IJSRuntime javascript
 <h3>Authors</h3>
 
 @if(response.Success == false)
@@ -34,9 +35,9 @@ else
                     <td>@author.FirstName</td>
                     <td>@author.LastName</td>
                     <td>
-                        <a class="btn btn-primary" href="/authors/details"><span class="oi oi-book" aria-hidden="true"></span>Details</a>
+                        <a class="btn btn-primary" href="/authors/details/@author.Id"><span class="oi oi-book" aria-hidden="true"></span>Details</a>
                         <a class="btn btn-warning" href="/authors/update/@author.Id"><span class="oi oi-pencil" aria-hidden="true"></span>Edit</a>
-                        <a class="btn btn-danger" href="/authors/delete"><span class="oi oi-delete" aria-hidden="true"></span>Delete</a>
+                        <button class="btn btn-danger" @onclick=@(()=> DeleteAuthor(author.Id)) href="/authors/delete"><span class="oi oi-delete" aria-hidden="true"></span>Delete</button>
                     </td>
                 </tr>
             }
@@ -54,6 +55,17 @@ else
         if (response.Success)
         {
             AuthorsModel = response.Data;
+        }
+    }
+
+    private async Task DeleteAuthor(int authorId)
+    {
+        var author = AuthorsModel.Where(author => author.Id == authorId).FirstOrDefault();
+        var confirm = await javascript.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the author {author.FirstName} {author.LastName}?");
+        if(confirm){
+            var response = await authorService.DeleteAuthor(authorId);
+            if (response.Success)
+                await OnInitializedAsync();
         }
     }
 }

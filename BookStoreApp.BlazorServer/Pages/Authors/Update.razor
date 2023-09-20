@@ -1,6 +1,7 @@
 ﻿@page "/authors/update/{id:int}"
 @inject IAuthorService authorService
 @inject NavigationManager navManager
+@attribute [Authorize(Roles = "Administrator")]
 <h3>Edit Author</h3>
 
 <EditForm Model="Author" OnValidSubmit="HandleUpdateAuthor">

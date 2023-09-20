@@ -1,6 +1,7 @@
 ﻿@page "/authors/create/"
 @inject IAuthorService authorService
 @inject NavigationManager navManager
+@attribute [Authorize(Roles ="Administrator")]
 
 <h3>Create New Author</h3>
 <EditForm Model="Author" OnValidSubmit="HandleCreateAuthor">

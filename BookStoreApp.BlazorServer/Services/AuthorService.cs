@@ -35,28 +35,29 @@ namespace BookStoreApp.BlazorServer.Services
             return response;
         }
 
-        public async Task<Response<AuthorReadOnlyDto>> GetAuthor(int id)
+        public async Task<Response<AuthorDetailsDto>> GetAuthor(int id)
         {
-            Response<AuthorReadOnlyDto> response;
+            Response<AuthorDetailsDto> response;
 
             try
             {
-                var author = await client.AuthorsGETAsync(id);
-                var data = new AuthorReadOnlyDto()
-                { 
-                    FirstName = author.FirstName,
-                    LastName = author.LastName,
-                    Bio = author.Bio,
-                    Id = author.Id
-                };
-                response = new Response<AuthorReadOnlyDto> { 
+                var data = await client.AuthorsGETAsync(id);
+                //var data1 = new AuthorDetailsDto()
+                //{ 
+                //    Books = author.Books,
+                //    FirstName = author.FirstName,
+                //    LastName = author.LastName,
+                //    Bio = author.Bio,
+                //    Id = author.Id
+                //};
+                response = new Response<AuthorDetailsDto> { 
                     Data = data, 
                     Success = true
                 };
             }
             catch (ApiException apiException)
             {
-                response = ConvertApiExceptions<AuthorReadOnlyDto>(apiException);
+                response = ConvertApiExceptions<AuthorDetailsDto>(apiException);
             }
 
             return response;
@@ -87,6 +88,23 @@ namespace BookStoreApp.BlazorServer.Services
             {
                 await GetBearerToken();
                 await client.AuthorsPUTAsync(id, author);
+            }
+            catch (ApiException apiException)
+            {
+                response = ConvertApiExceptions<int>(apiException);
+            }
+
+            return response;
+        }
+
+        public async Task<Response<int>> DeleteAuthor(int id)
+        {
+            Response<int> response = new();
+
+            try
+            {
+                await GetBearerToken();
+                await client.AuthorsDELETEAsync(id);
             }
             catch (ApiException apiException)
             {

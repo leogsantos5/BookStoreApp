@@ -48,11 +48,11 @@ namespace BookStoreApp.API.Controllers
 
         // GET: api/Authors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Author>> GetAuthor(int id)
+        public async Task<ActionResult<AuthorDetailsDto>> GetAuthor(int id)
         {
             try
             {
-                var author = await _context.Authors.FindAsync(id);
+                var author = await _context.Authors.Include(author => author.Books).FirstOrDefaultAsync(author => author.Id == id);
 
                 if (author == null)
                 {
@@ -60,8 +60,8 @@ namespace BookStoreApp.API.Controllers
                     return NotFound();
                 }
 
-                var authorReadOnlyDto = mapper.Map<AuthorReadOnlyDto>(author);
-                return Ok(authorReadOnlyDto);
+                var authorDetailsDto = mapper.Map<AuthorDetailsDto>(author);
+                return Ok(authorDetailsDto);
             }
             catch (Exception ex)
             {

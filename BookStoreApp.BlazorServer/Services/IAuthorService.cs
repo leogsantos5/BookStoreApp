@@ -6,10 +6,12 @@ namespace BookStoreApp.BlazorServer.Services
     {
         Task<Response<List<AuthorReadOnlyDto>>> GetAuthors();
 
-        Task<Response<AuthorReadOnlyDto>> GetAuthor(int id);
+        Task<Response<AuthorDetailsDto>> GetAuthor(int id);
         Task<Response<int>> CreateAuthor(AuthorCreateDTO author);
 
         Task<Response<int>> EditAuthor(int id, AuthorUpdateDto author);
+
+        Task<Response<int>> DeleteAuthor(int id);
 
     }
 }

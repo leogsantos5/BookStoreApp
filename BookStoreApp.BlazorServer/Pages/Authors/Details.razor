@@ -9,17 +9,14 @@
         <div class="form-group">
             <label for="firstname"> First Name </label>
             <InputText @bind-Value="Author.FirstName" class="form-control" id="firstname" />
-            <ValidationMessage For="@(() => Author.FirstName)" />
         </div>
         <div class="form-group">
             <label for="lastname"> Last Name </label>
             <InputText @bind-Value="Author.LastName" class="form-control" id="lastname" />
-            <ValidationMessage For="@(() => Author.LastName)" />
         </div>
         <div class="form-group">
             <label for="bio"> Biography </label>
             <InputText @bind-Value="Author.Bio" class="form-control" id="bio" />
-            <ValidationMessage For="@(() => Author.Bio)" />
         </div>
         @if (Author.Books == null || Author.Books.Any() == false)
         {
@@ -29,24 +26,26 @@
         }
         else
         {
-            foreach(var book in Author.Books)
-            {
-                <div class="card" width="18rem;">
-                    <img src="@book.Image" class="card-img-top" alt="@book.Title">
-                    <div class="card-body">
-                        <h5 class="card-title">@book.Title @book.Price.ToString("C")</h5>
-                        <p class="card-text"></p>
-                        <a href="#" class="btn btn-primary">View Book</a>
+            <div class="row">
+                @foreach(var book in Author.Books)
+                {
+                    <div col-3>
+                        <div class="card" width="18rem;">
+                            <img src="@book.Image" width="150" height="150" alt="@book.Title">
+                            <div class="card-body">
+                                <h5 class="card-title">@book.Title @book.Price.ToString("C")</h5>
+                                <p class="card-text"></p>
+                                <a href="#" class="btn btn-primary">View Book</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         }
     </fieldset>
-    <button class="btn btn-warning" @onclick="GoToEditAuthor">
-        <span class="oi oi-pencil">Edit Author</span>
-    </button>
-    <button @onclick="BackToAuthorsList" class="btn btn-outline-secondary">
-        <span class="oi oi-media-skip-backward">Back To Authors List</span>
+    <button @onclick="BackToAuthorsList" class="btn btn-outline-secondary" type="button">
+        <span class="oi oi-media-skip-backward"></span>
+        Back To Authors List
     </button>
 
 </EditForm>

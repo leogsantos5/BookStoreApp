@@ -1398,6 +1398,9 @@ namespace BookStoreApp.BlazorServer.Services.Base
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class BookCreateDTO
     {
+        [Newtonsoft.Json.JsonProperty("authorId", Required = Newtonsoft.Json.Required.Always)]
+        public int AuthorId { get; set; }
+
         [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [System.ComponentModel.DataAnnotations.StringLength(50)]
@@ -1416,8 +1419,11 @@ namespace BookStoreApp.BlazorServer.Services.Base
         [System.ComponentModel.DataAnnotations.StringLength(250, MinimumLength = 10)]
         public string Summary { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("image", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Image { get; set; }
+        [Newtonsoft.Json.JsonProperty("imageData", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ImageData { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("originalImageName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string OriginalImageName { get; set; }
 
         [Newtonsoft.Json.JsonProperty("price", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0D, 2147483647D)]
@@ -1483,6 +1489,9 @@ namespace BookStoreApp.BlazorServer.Services.Base
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int Id { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("authorId", Required = Newtonsoft.Json.Required.Always)]
+        public int AuthorId { get; set; }
+
         [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [System.ComponentModel.DataAnnotations.StringLength(50)]
@@ -1503,6 +1512,12 @@ namespace BookStoreApp.BlazorServer.Services.Base
 
         [Newtonsoft.Json.JsonProperty("image", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Image { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("imageData", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ImageData { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("originalImageName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string OriginalImageName { get; set; }
 
         [Newtonsoft.Json.JsonProperty("price", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0D, 2147483647D)]

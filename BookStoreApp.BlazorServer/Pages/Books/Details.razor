@@ -1,0 +1,76 @@
+﻿@page "/books/details/{id:int}"
+@inject IBookService bookService
+@inject NavigationManager navManager
+
+<h3>Book Details</h3>
+
+<EditForm Model="Book">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <fieldset disabled>
+        <div class="form-group">
+            <label>Book Cover Photo</label>
+            <div>
+                <img src="@Book.Image" width="100" height="100" class="img-thumbnail" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="title">Book Title</label>
+            <InputText @bind-Value="Book.Title" class="form-control" id="title"></InputText>
+        </div>
+        <div class="form-group">
+            <label for="authorName">Author Name</label>
+            <InputText @bind-Value="Book.AuthorName" class="form-control" id="authorName"></InputText>
+        </div>
+        <div class="form-group">
+            <label for="summary">Summary</label>
+            <InputText @bind-Value="Book.Summary" class="form-control" id="summary"></InputText>
+        </div>
+        <div class="form-group">
+            <label for="isbn">ISBN</label>
+            <InputText @bind-Value="Book.Isbn" class="form-control" id="isbn"></InputText>
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <InputNumber @bind-Value="Book.Price" class="form-control" id="price"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="year">Year</label>
+            <InputNumber @bind-Value="Book.Year" class="form-control" id="year"></InputNumber>
+        </div>
+    </fieldset>
+    <button class="btn btn-warning" @onclick="GoToEditBook">
+        <span class="oi oi-pencil"></span>
+        Edit Book
+    </button>
+    <button @onclick="BackToBooksList" class="btn btn-outline-secondary" type="button">
+        <span class="oi oi-media-skip-backward"></span>
+        Back To Books List
+    </button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    BookDetailsDto Book = new BookDetailsDto();
+    private string UploadFileWarning = "";
+    private string img = "";
+
+    protected async override Task OnInitializedAsync()
+    {
+        var response = await bookService.GetBook(id);
+        if (response.Success)
+            Book = response.Data;
+    }
+
+    private void BackToBooksList()
+    {
+        navManager.NavigateTo("/books/");
+    }
+
+    private void GoToEditBook()
+    {
+        navManager.NavigateTo($"/books/update/{id}");
+    }
+}

@@ -41,7 +41,8 @@ namespace BookStoreApp.BlazorServer.Services
 
             try
             {
-                var data = await client.AuthorsGETAsync(id);
+                await GetBearerToken();
+                var data = await client.AuthorsGETAsync(id); // Unauthorized
                 //var data1 = new AuthorDetailsDto()
                 //{ 
                 //    Books = author.Books,

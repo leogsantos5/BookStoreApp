@@ -1,0 +1,67 @@
+﻿@page "/authors/update/{id:int}"
+@inject IAuthorService authorService
+@inject NavigationManager navManager
+@attribute [Authorize(Roles = "Administrator")]
+<h3>Edit Author</h3>
+
+<EditForm Model="Author" OnValidSubmit="HandleUpdateAuthor">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="firstname"> First Name </label>
+        <InputText @bind-Value="Author.FirstName" class="form-control" id="firstname" />
+        <ValidationMessage For="@(() => Author.FirstName)" />
+    </div>
+    <br/>
+    <div class="form-group">
+        <label for="lastname"> Last Name </label>
+        <InputText @bind-Value="Author.LastName" class="form-control" id="lastname" />
+        <ValidationMessage For="@(() => Author.LastName)" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="bio"> Biography </label>
+        <InputText @bind-Value="Author.Bio" class="form-control" id="bio" />
+        <ValidationMessage For="@(() => Author.Bio)" />
+    </div>
+    <button class="btn btn-primary" type="submit">
+        <span class="oi oi-pencil"> Update Author</span>
+    </button>
+    <button @onclick="BackToAuthorsList" class="btn btn-outline-secondary" type="button">
+        <span class="oi oi-media-skip-backward"></span>
+        Back To Authors List
+    </button>
+
+</EditForm>
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    private AuthorUpdateDto Author = new AuthorUpdateDto();
+
+    private async Task HandleUpdateAuthor()
+    {
+        var response = await authorService.EditAuthor(id, Author);
+        if (response.Success)
+            BackToAuthorsList();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await authorService.GetAuthor(id);
+        var authorForUpdate = new AuthorUpdateDto() // Trevoir used AutoMapper for this, from AuthorUpdateDto to AuthorReadOnlyDto
+        {
+            FirstName = response.Data.FirstName,
+            LastName = response.Data.LastName,
+            Bio = response.Data.Bio,
+            Id = response.Data.Id
+        };
+        if (response.Success)
+            Author = authorForUpdate;
+    }
+
+    private void BackToAuthorsList()
+    {
+        navManager.NavigateTo("/authors/");
+    }
+}

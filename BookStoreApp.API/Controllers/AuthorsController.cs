@@ -29,6 +29,9 @@ namespace BookStoreApp.API.Controllers
             this.logger = logger;
         }
 
+        // Repository Pattern is not used in this project because i´ve already used it on another project using MVC, it´s the same.
+        // It would be redundant learning wise, as i´m doing this project for educational purposes
+
         // GET: api/Authors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AuthorReadOnlyDto>>> GetAuthors()
